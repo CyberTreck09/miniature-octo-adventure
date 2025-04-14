@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain Clock Widget</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+       
+       
+      }
+      
+      .bg-image {
+        background-image: url('./assets/desktop/bg-image-daytime.jpg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+      }
+     
+    </style>
+</head>
+<body class="relative min-h-screen bg-image">
+  <div class="absolute inset-0 bg-black/60 z-0"></div>
+
+  <!-- main section unexpanded  -->
+  <div class="relative z-10 flex flex-col h-screen w-screen text-white justify-between p-32">
+    <div class="flex justify-between">
+      <div class="w-[50%]">
+        <!-- quote -->
+        <p class="text-1xl ">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id ad possimus magnam quisquam adipisci deleniti expedita, culpa amet sunt enim minima mollitia beatae, dolor maiores tempora facilis dignissimos? Ducimus, delectus?
+        </p>
+        <!-- author -->
+        <p>
+          Assan Njie
+        </p>
+      </div>
+      <div class="w-{50%}">
+
+      </div>
+    </div>
+    <div class="flex justify-between items-baseline-last">
+      <div>
+        <p>GOOD MORING, IT'S CURRENTLY</p>
+        <p>
+          <span id="time" class="text-9xl font-bold">00:00</span> <span>BST</span>
+          <P>IN LONDON, UK</P>
+        </p>
+      </div>
+      <div>
+        <button class="flex items-center justify-center bg-white text-black rounded-full w-32 h-12 mt-8" id="toggle-button">
+          <span id="button-text">MORE</span>
+          <div class="bg-gray-400 rounded-full w-8 h-8 flex items-center justify-center ml-2">
+            <svg id="chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10l5 5 5-5m-5 5V4"/>
+            </svg>
+            <svg id="chevron-up" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 14l5-5 5 5m-5-5v11"/>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- expanded section -->
+  <div>
+    <div>
+      <div></div>
+      <div></div>
+    </div>
+    <div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+
+
+  <!-- <script>
+    // DOM Elements
+    const timeElement = document.getElementById('time');
+    const toggleButton = document.getElementById('toggle-button');
+    const buttonText = document.getElementById('button-text');
+    const chevronDown = document.getElementById('chevron-down');
+    const chevronUp = document.getElementById('chevron-up');
+    const expandedDetails = document.getElementById('expanded-details');
+    const quoteContainer = document.getElementById('quote-container');
+    const background = document.getElementById('background');
+    const dayOfWeekElement = document.getElementById('day-of-week');
+    const dayOfYearElement = document.getElementById('day-of-year');
+    const weekNumberElement = document.getElementById('week-number');
+
+    // State
+    let expanded = false;
+
+    // Update time
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      timeElement.textContent = `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+      
+      // Update other time-related information
+      dayOfWeekElement.textContent = now.getDay();
+      dayOfYearElement.textContent = getDayOfYear(now);
+      weekNumberElement.textContent = getWeekNumber(now);
+    }
+
+    // Get day of year
+    function getDayOfYear(date) {
+      const start = new Date(date.getFullYear(), 0, 0);
+      const diff = date.getTime() - start.getTime();
+      const oneDay = 1000 * 60 * 60 * 24;
+      return Math.floor(diff / oneDay);
+    }
+
+    // Get week number
+    function getWeekNumber(date) {
+      const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+      return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    }
+
+    // Toggle expanded state
+    function toggleExpanded() {
+      expanded = !expanded;
+      
+      if (expanded) {
+        buttonText.textContent = 'LESS';
+        chevronDown.classList.add('hidden');
+        chevronUp.classList.remove('hidden');
+        expandedDetails.classList.remove('hidden');
+        quoteContainer.classList.add('hidden');
+        // background.style.backgroundImage = "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Desktop-P9009%20-%20Daytime%20-%20Expand.jpg-ulTGhqtJrweiwFPhNgH7SHyA5Cexdv.jpeg')";
+      } else {
+        buttonText.textContent = 'MORE';
+        chevronDown.classList.remove('hidden');
+        chevronUp.classList.add('hidden');
+        expandedDetails.classList.add('hidden');
+        quoteContainer.classList.remove('hidden');
+        // background.style.backgroundImage = "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Desktop-P9009%20-%20Daytime.jpg-Yvhaj9xgtSP1aMbju40zL16NS3TlrZ.jpeg')";
+      }
+    }
+
+    // Event listeners
+    toggleButton.addEventListener('click', toggleExpanded);
+
+    // Initialize
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script> -->
+</body>
+</html>
